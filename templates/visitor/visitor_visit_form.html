@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% block content %}
+
+<head>
+    <title>Add Visitor</title>
+    <style>
+        #visitor_btn{
+            background-color: #008d97;  
+            color: #fff;
+            font-weight: bold; 
+            font-size: large;
+        }
+        .center{
+            text-align: center;
+        }
+        .btn-center {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+        .bottom-margin{
+            margin-bottom: 50px;
+        }
+        .mandatory {
+            color: red;
+        }
+        @media screen and (max-width: 768px) {
+            #visitor_btn{
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3 class="margin-top-for-header ">Add Visitor</h3>
+        <form action method="POST" enctype="multipart/form-data"  class="needs-validation border p-4 rounded shadow" novalidate>
+            {% csrf_token %}
+              <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        {{ visitor_form.full_name.label }} <span class="mandatory">*</span>
+                        {{ visitor_form.full_name }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ visitor_form.mobile_number.label }} <span class="mandatory">*</span>
+                        {{ visitor_form.mobile_number }}
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ visitor_form.email.label }}
+                        {{ visitor_form.email }}
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <div class="row">
+                <div class="col-md-6">
+                <div class="form-group">
+                    <div class="address" id="address">
+                        {{ visitor_form.address.label }} 
+                        {{ visitor_form.address }}
+                    </div>
+                </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="photo">Photo:</label>
+                        <div class="input-group">
+                            <input type="file" class="form-control" id="photo"
+                                name="photo">
+                        </div>
+                    </div>
+                </div> 
+            </div>
+           
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="purpose">Purpose:</label> <span class="mandatory">*</span>
+                        <select class="form-control" id="purpose" name="purpose">
+                            <option value="Meeting">Meeting</option>
+                            <option value="Interview">Interview</option>
+                            <option value="Delivery">Delivery</option>
+                            <option value="Visit">Visit</option> 
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div clas="form-group">
+                        {{ visit_form.employee.label }}
+                        {{ visit_form.employee }}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div clas="form-group">
+                        {{ visit_form.gate.label }} <span class="mandatory">*</span>
+                        {{ visit_form.gate }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{visit_form.no_of_individuals.label}}  <span class="mandatory">*</span>  <br>
+                    {{visit_form.no_of_individuals}}
+                </div>
+            </div>
+                <div class="col-md-6">
+                    <div clas="form-group">
+                        {{ visit_form.vehicle_number.label }} 
+                        {{ visit_form.vehicle_number }}
+                    </div>
+                </div>
+            </div>
+           <br>
+            
+
+            
+            <div class="row">
+                <div class="col-md-12 bottom-margin">
+                    <div class="form-group">
+                        <input type="submit" class="btn-center btn col-md-4" id="visitor_btn" value="Register Visitor">
+                    </div>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+</body>
+
+{% block ScriptBlock %}
+<script>
+    $(document).ready(function(){
+        $('form').submit(function(event){
+            event.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '{% url "visitor-register" %}',
+
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function(response){
+                    if (response.success) {
+                        $('#addVisitorModal').modal('show');
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock ScriptBlock %}
+
+{% endblock %}

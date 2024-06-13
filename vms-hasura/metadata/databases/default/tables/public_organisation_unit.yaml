@@ -1,0 +1,21 @@
+table:
+  name: organisation_unit
+  schema: public
+object_relationships:
+  - name: org_unit_id
+    using:
+      foreign_key_constraint_on: org_id
+  - name: unit_created_by
+    using:
+      foreign_key_constraint_on: created_by_id
+  - name: unit_updtaed_by
+    using:
+      foreign_key_constraint_on: updated_by_id
+array_relationships:
+  - name: department
+    using:
+      foreign_key_constraint_on:
+        column: unit_id
+        table:
+          name: organisation_department
+          schema: public

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Notification</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+        }
+        .card-body {
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+        .visitor-info p {
+            margin-bottom: 5px;
+        }
+        .card-title {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .thank-you {
+            text-align: center;
+            margin-top: 30px;
+            font-style: italic;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Visitor Notification</h4>
+                <p>Dear {{ employee.full_name }},</p>
+                <p>A new visitor has checked in:</p>
+                <div class="visitor-info">
+                    <img src="cid:logo.png" alt="Picture" style="max-width: 100%; margin-top: 20px;">
+                    <p><strong>Name:</strong> {{ visitor.full_name }}</p>
+                    <p><strong>Email:</strong> {{ visitor.email }}</p>
+                    <p><strong>Mobile Number:</strong> {{ visitor.mobile_number }}</p>
+                    <p><strong>No. of Individuals:</strong> {{ visit.no_of_individuals }}</p>
+                    <p><strong>Purpose:</strong> {{ visit.purpose }}</p>
+                </div>
+                <p>Please ensure the visitor is attended to.</p>
+                <p class="thank-you">Thank you!</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+table:
+  name: accounts_useraccount
+  schema: public
+array_relationships:
+  - name: dept_create_by
+    using:
+      foreign_key_constraint_on:
+        column: created_by_id
+        table:
+          name: organisation_department
+          schema: public
+  - name: dept_update_by
+    using:
+      foreign_key_constraint_on:
+        column: updated_by_id
+        table:
+          name: organisation_department
+          schema: public
+  - name: org_units_created_by
+    using:
+      foreign_key_constraint_on:
+        column: created_by_id
+        table:
+          name: organisation_unit
+          schema: public
+  - name: org_units_updated_by
+    using:
+      foreign_key_constraint_on:
+        column: updated_by_id
+        table:
+          name: organisation_unit
+          schema: public

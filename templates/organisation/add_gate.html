@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block content %}
+
+<head>
+    <title>Add Gate</title>
+    <style>
+        #gate_btn{
+            align-items: center;
+            background-color: #008d97;  
+            color: #fff;
+            font-weight: bold; 
+            font-size: large;
+            width: 300px;
+
+        }
+        .center {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+        .bottom-margin{
+            margin-bottom: 20px;
+        }
+        @media screen and (max-width: 768px) {
+            #visitor_btn{
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>Add Gate</h3>
+        <form action method="POST" enctype="multipart/form-data"  class="needs-validation border p-4 rounded shadow" novalidate>
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        {{ gate_form.name.label }}
+                        {{ gate_form.name }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        {{ gate_form.description.label }}
+                        {{ gate_form.description }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+
+                <div class="col-md-12 bottom-margin">
+                    <div class="form-group">
+                        {{ gate_form.unit.label }}
+                        {{ gate_form.unit }}
+                    </div>
+                </div>
+
+               
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12 bottom-margin">
+                    <div clas="form-group">
+                        <input type="submit" class="btn col-md-6 center "
+                            id="gate_btn" value="Add Gate">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+</body>
+
+{% endblock %}

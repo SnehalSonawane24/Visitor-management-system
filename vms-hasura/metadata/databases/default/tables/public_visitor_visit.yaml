@@ -1,0 +1,10 @@
+table:
+  name: visitor_visit
+  schema: public
+object_relationships:
+  - name: organisation_employeeprofile
+    using:
+      foreign_key_constraint_on: employee_id
+  - name: visitor_visitorprofile
+    using:
+      foreign_key_constraint_on: visitor_id

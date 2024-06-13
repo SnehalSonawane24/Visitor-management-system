@@ -1,0 +1,24 @@
+Dockerfile
+docker-compose.yml
+
+# Exclude version control system files
+.git
+.svn
+.hg
+
+# Exclude temporary files and directories
+*.pyc
+__pycache__
+
+# Exclude editor or IDE-specific files
+.vscode
+.idea
+
+# Exclude build artifacts
+node_modules
+venv
+env
+
+# Exclude logs and other generated files
+logs
+*.log

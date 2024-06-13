@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Visitor</title>
+</head>
+<body>
+    <h2>Edit Visitor</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="full_name">Full Name:</label>
+        <input type="text" id="full_name" name="full_name" value="{{ visitor.full_name }}" required><br><br>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{{ visitor.email }}" required><br><br>
+        
+        <label for="mobile_number">Mobile Number:</label>
+        <input type="text" id="mobile_number" name="mobile_number" value="{{ visitor.mobile_number }}" required><br><br>
+        
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" value="{{ visitor.address }}" required><br><br>
+        
+        <button type="submit">Save Changes</button>
+    </form>
+</body>
+</html>

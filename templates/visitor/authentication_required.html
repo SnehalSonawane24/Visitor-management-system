@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: rgba(0,0,0,0.5); 
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            max-width: 80%; 
+        }
+        .gif-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .btn-ok {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn-ok:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="modal-container mt-5">
+        {% load static %}
+        <div class="gif-container">
+            <img src="/static/visitor/red-cross.gif" alt="Thank You GIF">
+        </div>
+        <h3 class="mb-4">Authentication required. Please login.</h3>
+        <button id="okButton" class="btn btn-ok">Go To Login</button>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Add event listener to the OK button
+        document.getElementById("okButton").addEventListener("click", function() {
+            window.location.href = "/";
+        });
+    </script>
+</body>
+</html>

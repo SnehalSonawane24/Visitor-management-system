@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% block content %}
+  <title>Visitor Information</title>
+  <style>
+    .visitor-photo {
+        width: 166px;
+        height: 161px;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    @media print {
+      #print {
+        display: none;
+      }
+      #msg {
+        display: none;
+      }
+    }
+
+    body {
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+
+    .card {
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .card-body {
+      padding: 40px;
+      background-color: #fff;
+      border-radius: 5px;
+    }
+
+    .visitor-info p {
+      margin-bottom: 5px;
+      margin-left: 25%;
+    }
+
+    .card-title {
+      color: #333;
+      font-weight: bold;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .thank-you {
+      text-align: center;
+      margin-top: 30px;
+      font-style: italic;
+      color: #666;
+    }
+
+    #print {
+      display: block;
+    }
+
+    @media print {
+      .navbar, #sidebar, #sidebarToggle {
+        display: none !important;
+      }
+      #print {
+        display: none;
+      }
+      body {
+        padding-top: 0;
+      }
+      footer {
+        margin-top: -10%;
+      }
+    }
+
+    .center1 {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media screen and (max-width: 768px) {
+      .visitor-photo {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <div id="print-content">
+    <div class="container">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">QR for Gate</h4>
+          <div class="visitor-info">
+            <img src="{{ qr_code_url }}" alt="QR Code" class="visitor-photo mb-4 center1" />
+            <p><strong>Gate Name:</strong>  {{ gate.name }}</p>
+            <p><strong>Unit Name:</strong> {{ unit_name }}</p>
+            <p><strong>Organisation:</strong> {{ organisations_details }}</p>
+          </div>
+        </div>
+        <button class="btn btn-lg btn-light rounded-0 bg-gradient-light border" type="button" id="print">
+          <i class="fa fa-print"></i> Print
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXlY93IFxS8R6P5S3V6dfBf/5TOi6GcDkhtHgs7BitJ6lRoaLO3H34o8X3m9" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGg2baFdAa2vO5K1Ghz5iZksj3z0xwtgIKwd5y4+j3swl1pUANz6w8l5tE2" crossorigin="anonymous"></script>
+  <script>
+    // Function to handle printing when the button is clicked
+    document.getElementById("print").addEventListener("click", function () {
+      var visitorName = "{{ visitor.full_name }}";
+      var visitorTime = "{{ visit.check_in }}";
+      var sanitizedVisitorName = visitorName.replace(/[^a-z0-9]/gi, "_");
+      var filename = "visitor_gatepass_" + sanitizedVisitorName + "_" + visitorTime + ".pdf";
+      document.title = visitorName + " Gatepass";
+      window.print();
+      document.title = "Visitor Gatepass";
+    });
+  </script>
+</body>
+{% endblock %}

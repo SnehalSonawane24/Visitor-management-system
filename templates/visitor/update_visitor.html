@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<head>
+    <title>Add Visitor</title>
+    <style>
+        .margin-top-for-header {
+            margin-top: 30px;
+        }
+
+        .btn-center {
+            margin-top: 20px;
+        }
+
+        @media screen and (max-width: 768px) {
+            #visitor_btn {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3 class="text-center margin-top-for-header">Edit Visitor Details</h3>
+        <form action="" method="POST" enctype="multipart/form-data" class="needs-validation border p-4 rounded shadow" novalidate>
+            {% csrf_token %}
+            <div class="row">
+                <div class="form-group col-md-4">
+                    {{ form.first_name.label }}
+                    {{ form.first_name }}
+                </div>
+                <div class="form-group col-md-4">
+                    {{ form.middle_name.label }}
+                    {{ form.middle_name }}
+                </div>
+                <div class="form-group col-md-4">
+                    {{ form.last_name.label }}
+                    {{ form.last_name }}
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    {{ form.mobile_number.label }}
+                    {{ form.mobile_number }}
+                </div>
+
+                <div class="form-group col-md-6">
+                    {{ form.email.label }}
+                    {{ form.email }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form.address.label }}
+                {{ form.address }}
+            </div>
+
+
+            <div class="form-row justify-content-center">
+                <div class="form-group col-md-4">
+                    <input type="submit" class="btn btn-primary btn-block" id="visitor_btn" value="Update Visitor">
+                </div>
+            </div>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+{% endblock content %}

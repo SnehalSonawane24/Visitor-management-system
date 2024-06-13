@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+    <title>Add Visitor</title>
+    <style>
+        #visitor_btn{
+            background-color: #008d97;  
+            color: #fff;
+            font-weight: bold; 
+            font-size: large;
+        }
+        .center{
+            text-align: center;
+        }
+        .btn-center {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+        .bottom-margin{
+            margin-bottom: 50px;
+        }
+        .mandatory {
+            color: red;
+        }
+        @media screen and (max-width: 768px) {
+            #visitor_btn{
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Find Visitor Profile</h2>
+        <form id="visitor-form" method="post" action="{% url 'get_visitor_profile' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="mobile_number">Mobile Number:</label>
+                <input type="text" class="form-control" id="mobile_number" name="mobile_number" placeholder="Enter mobile number" required>
+            </div>
+            <input type="hidden" id="redirect_url" value="{% url 'visitor-log' %}">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <!-- <script>
+        document.getElementById('visitor-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const mobileNumber = document.getElementById('mobile_number').value;
+
+            fetch("{% url 'get_visitor_profile' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify({ mobile_number: mobileNumber })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    if (data.exists) {
+                        window.location.href = "{% url 'get_visitor_profile' %}?mobile_number=" + mobileNumber;
+                    } else {
+                        if (confirm("The mobile number does not exist. Do you want to try with another number?")) {
+                            document.getElementById('visitor-form').reset();
+                        } else {
+                            window.location.href = "{% url 'visitor-register' %}";
+                        }
+                    }
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script> -->
+    <script>
+        document.getElementById('visitor-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const mobileNumber = document.getElementById('mobile_number').value;
+        
+            fetch("{% url 'get_visitor_profile' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify({ mobile_number: mobileNumber })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    if (data.exists) {
+                        window.location.href = "{% url 'add_visit_details' %}?mobile_number=" + mobileNumber;
+                    } else {
+                        if (confirm("The mobile number does not exist. Do you want to try with another number?")) {
+                            document.getElementById('visitor-form').reset();
+                        } else {
+                            window.location.href = "{% url 'visitor-register' %}";
+                        }
+                    }
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+        </script>
+</body>
+{% endblock %}

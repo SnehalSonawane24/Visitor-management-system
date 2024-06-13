@@ -1,0 +1,212 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Visitor</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://kit.fontawesome.com/31280ba79f.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('{% static 'background.jpg' %}');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        #visit_btn {
+            align-items: center;
+            background-color: #008d97;
+            color: #fff;
+            font-weight: bold;
+            font-size: large;
+            width: 300px;
+            margin-left: 35%;
+        }
+        .center {
+            text-align: center;
+        }
+        .btn-center {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+        .bottom-margin {
+            margin-bottom: 50px;
+        }
+        .mandatory {
+            color: red;
+        }
+        .profile-card {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 12px #aaa;
+            margin-top: 20px;
+        }
+        .profile-card img {
+            max-width: 80%;
+            height: 50%;
+            display: block;
+            margin: 0 auto;
+        }
+        @media screen and (max-width: 768px) {
+            #visit_btn {
+                width: 200px;
+            }
+            .col-sm-6 {
+                width: 100%;
+                padding: 0;
+            }
+            .row {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            p {
+                margin-left: 5%;
+            }
+            #visit_btn {
+                margin-left: 20%;
+                width: 200px;
+            }
+            h2 {
+                font-size: large;
+            }
+        }
+    </style>
+    <script>
+        function showPopup(message, last_met_employee) {
+            if (message !== "") {
+                Swal.fire({
+                    title: 'Visitor Alert',
+                    html: `<p style="font-size: 1.2em; color: #333;">Do you want to meet <b style="font-size: 1.3em; color: #007bff;">${last_met_employee}</b> you met last time?</p>`,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('checkin-fields').style.display = 'block';
+
+                    } else {
+                        document.getElementById('new-visit-fields').style.display = 'block';
+                    }
+                });
+            }
+        }
+
+        window.onload = function() {
+            const message = "{{ messages|join:' ' }}";
+            const last_met_employee = "{{ last_met_employee }}";
+            showPopup(message, last_met_employee);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        {% if not visitor_profile %}
+            <form id="visitor-form" method="post" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="mobile_number">Mobile Number:</label>
+                    <input type="number" class="form-control" id="mobile_number" name="mobile_number" placeholder="Enter mobile number" maxlength="10" pattern="\d{10}" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        {% endif %}
+
+        {% if visitor_profile %}
+            <div class="profile-card">
+                <h2 class="center">Visitor Details</h2>
+                <img src="{{ visitor_profile.photo.url }}" alt="Visitor Photo">
+                <p><strong>Name:</strong>  {{ visitor_profile.full_name }}</p>
+                <p><strong>Email:</strong> {{ visitor_profile.email }}</p>
+                <p><strong>Mobile Number:</strong> {{ visitor_profile.mobile_number }}</p>
+            </div>
+
+            <form method="post" id="visitor-details" action="">
+                {% csrf_token %}
+                <input type="hidden" name="visitor_profile_id" value="{{ visitor_profile.id }}">
+                <div id="checkin-fields" style="display: none;">
+                    <div class="form-group bottom-margin">
+                        <label for="check_in">Check In:</label> <span class="mandatory">*</span>
+                        <div class="input-group">
+                            <input type="datetime-local" class="form-control" id="check_in" name="check_in" required>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Submit123</button>
+                    </div>
+                </div>
+            </form>
+
+            <form method="post" id="new-visit-fields" style="display: none;" action="">
+                {% csrf_token %}
+                <input type="hidden" name="visitor_profile_id" value="{{ visitor_profile.id }}">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="employee">Employee</label> <span class="mandatory">*</span>
+                            <select class="form-control" id="employee" name="employee">
+                                {% for employee_id, employee_name in employee_names %}
+                                    <option value="{{ employee_id }}">{{ employee_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="gate">Gate</label> <span class="mandatory">*</span>
+                            <div class="form-group">
+                                <input type="text" class="form-control" value="{{ gate_name }}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="purpose">Purpose:</label> <span class="mandatory">*</span>
+                            <select class="form-control" id="purpose" name="purpose" required>
+                                <option value="Meeting">Meeting</option>
+                                <option value="Interview">Interview</option>
+                                <option value="Delivery">Delivery</option>
+                                <option value="Visit">Visit</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="vehicle_number">Vehicle Number</label>
+                            <input type="text" id="vehicle_number" name="vehicle_number" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="no_of_individuals">No. of Individuals:</label>
+                            <input type="number" class="form-control" id="no_of_individuals" name="no_of_individuals" required>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" id="visit_btn">Create Visit</button>
+            </form>
+        {% endif %}
+    </div>
+</body>
+</html>

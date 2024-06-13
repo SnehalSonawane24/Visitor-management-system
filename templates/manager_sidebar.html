@@ -1,0 +1,29 @@
+
+{% block sidebar_items %}
+
+
+    <li class="nav-item">
+        <i class="fa-solid fas fa-building"></i>
+        <a class="nav-link" href="{% url 'unit-list' %}" style="display: inline-block; vertical-align: middle;">Unit</a>
+    </li>
+
+    <li class="nav-item">
+        <i class="fa-solid fa-building"></i>
+        <a class="nav-link" href="{% url 'show-department' %}" style="display: inline-block; vertical-align: middle;">Department</a>
+    </li>
+
+    <li class="nav-item">
+        <i class="fa-solid fas fa-door-open"></i>
+        <a class="nav-link" href="{% url 'gate-list' %}" style="display: inline-block; vertical-align: middle;">Gate</a>
+    </li>
+
+    <li class="nav-item">
+        <i class="fa-solid fa-user"></i>
+        <a class="nav-link" href="{% url 'employee-list' %}" style="display: inline-block; vertical-align: middle;">Employee</a>
+    </li>
+
+    <li class="nav-item">
+        <i class="fa-solid fa-file-lines"></i>
+        <a class="nav-link" href="{% url 'visitor-log' %}" style="display: inline-block; vertical-align: middle;">Visitor Log</a>
+    </li>
+{% endblock %}

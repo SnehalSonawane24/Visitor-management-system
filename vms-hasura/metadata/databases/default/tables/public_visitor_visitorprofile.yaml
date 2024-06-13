@@ -1,0 +1,21 @@
+table:
+  name: visitor_visitorprofile
+  schema: public
+object_relationships:
+  - name: visitor_created_by
+    using:
+      foreign_key_constraint_on: created_by_id
+  - name: visitor_updated_by
+    using:
+      foreign_key_constraint_on: updated_by_id
+array_relationships:
+  - name: visitor_visits
+    using:
+      foreign_key_constraint_on:
+        column: visitor_id
+        table:
+          name: visitor_visit
+          schema: public
+  - name: accounts_useraccount
+    using:
+      foreign_key_constraint_on: created_by_id

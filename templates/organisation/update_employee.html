@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% block content %}
+
+<head>
+    <title>Update Employee</title>
+    <style>
+        #register_btn {
+            background-color: #008d97;
+            color: #fff;
+            font-weight: bold;
+            font-size: large;
+            width: 300px;
+        }
+
+        .bottom-margin {
+            margin-bottom: 30px;
+        }
+
+        @media screen and (max-width: 768px) {
+            #register_btn {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h3>Update Employee</h3>
+        <form action="" method="POST" enctype="multipart/form-data" class="needs-validation border p-4 rounded shadow" novalidate>
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        {{ form.first_name.label }}
+                        {{ form.first_name }}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        {{ form.middle_name.label }}
+                        {{ form.middle_name }}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        {{ form.last_name.label }}
+                        {{ form.last_name }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ form.mobile_number.label }}
+                        {{ form.mobile_number }}
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ form.email.label }}
+                        {{ form.email }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="address" id="address">
+                    {{ form.address.label }}
+                    {{ form.address }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ form.gender.label }}
+                        {{ form.gender }}
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="photo">Photo:</label>
+                        <div class="input-group">
+                            {{ form.photo }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ form.marital_status.label }}
+                        {{ form.marital_status }}
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <label for="date_of_birth">Date of Birth:</label>
+                        <div class="input-group">
+                            <input type="date" class="form-control"
+                                id="date_of_birth" name="date_of_birth">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 bottom-margin">
+                    <div class="form-group">
+                        {{ form.department.label }}
+                        {{ form.department }}
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12 bottom-margin">
+                    <div class="form-group">
+                        <input type="submit" class="center btn col-md-6 bottom-margin" id="register_btn" value="Update Employee">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Success!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Employee updated successfully.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            console.log("Document ready function executed.");
+            $('.date').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true
+            });
+        });
+    </script>
+</body>
+
+{% endblock %}

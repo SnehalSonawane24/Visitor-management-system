@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+{% block content %}
+<head>
+    <title>Visitor Report</title>
+    <style>
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .step-links {
+        display: flex;
+        align-items: center;
+    }
+    .step-links a {
+        padding: 8px 12px;
+        margin: 0 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        text-decoration: none;
+        color: #333;
+    }
+    .step-links a:hover {
+        background-color: #f0f0f0;
+    }
+    .orange-background {
+        background-color: #f08d38;
+        color: #fff;
+    }
+   
+    .current {
+        margin: 0 10px;
+    }
+    .wide-cell {
+        width: 150px;
+    }
+    .report-name h2{
+        margin-left: 50%;
+    }
+    .print-table th {
+        background-color: #f2f2f2;
+    }
+    .margin-left{
+        margin-left: 403px;
+    }
+    @media (max-width: 576px) {
+        .abc .row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .abc .col-sm-6 {
+            flex: 0 0 100%;
+            max-width: 100%;
+            margin-bottom: 10px;
+        }
+        .pagination {
+            display: none; 
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <div class="row report-name">
+        <h3>Visitor Report</h3>
+    </div>
+    <div class="abc">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <label class="control-label" for="filter_date">Choose Date</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <input type="date" id="filter_date" class="form-control form-control-sm rounded-0" name="filter_date" required="required">
+            </div>
+            <div class="col-sm-6">
+                <button class="btn btn-sm btn-primary rounded-0 bg-gradient-primary" id="filter_btn">
+                    <i class="fa fa-filter"></i> Filter
+                </button>
+                <button class="btn btn-sm btn-light rounded-0 bg-gradient-light border" type="button" id="print">
+                    <i class="fa fa-print"></i> Print
+                </button>
+                <button class="btn btn-sm rounded-0 orange-background" onclick="window.location.href='{% url 'download-visitor-report' %}'">
+                    <i class="fa fa-download"></i> Download Excel
+                </button>   
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr style=" background-color: #005577; color: white;">
+                    <th>Visitor Name</th>
+                    <th>Visitor Phone</th>
+                    <th>Visitor Address</th>
+                    <th>Purpose</th>
+                    <th>Employee</th>
+                    <th>Department</th>
+                    <th>Check In</th>
+                    <th>Check Out</th>
+                    <th>Gate</th>
+                    <th>Unit</th>
+                </tr>
+            </thead>
+            <tbody id="visitor_table_body">
+                {% for visitor in visitors_with_visit_details %}
+                    {% if visitor.is_active %}
+                    <tr>
+                        <td>{{ visitor.visitor_name }}</td>
+                        <td>{{ visitor.visitor_phone }}</td>
+                        <td>{{ visitor.visitor_address }}</td>
+                        <td>{{ visitor.visitor_purpose }}</td>
+                        <td>{{ visitor.visitor_employee }}</td>
+                        <td>{{ visitor.visitor_department }}</td>
+                        <td>{{ visitor.visitor_checkIN }}</td>
+                        <td>{{ visitor.visitor_checkOut }}</td>
+                        <td>{{ visitor.visitor_gate }}</td>
+                        <td>{{ visitor.visitor_unit }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination links -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if visitors_with_visit_details.has_previous %}
+            <a href="?page=1">&laquo; First</a>
+            <a href="?page={{ visitors_with_visit_details.previous_page_number }}">Previous</a>
+            {% endif %}
+            <span class="current">
+                Page {{ visitors_with_visit_details.number }} of {{ visitors_with_visit_details.paginator.num_pages }}.
+            </span>
+            {% if visitors_with_visit_details.has_next %}
+            <a href="?page={{ visitors_with_visit_details.next_page_number }}">Next</a>
+            <a href="?page={{ visitors_with_visit_details.paginator.num_pages }}">Last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+    <script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+   
+    <script>
+        document.getElementById('filter_btn').addEventListener('click', function () {
+            var selectedDate = document.getElementById('filter_date').value;
+            filterLogs(selectedDate);
+        });
+
+        document.getElementById('print').addEventListener('click', function () {
+            printTable();
+        });
+
+        function filterLogs(selectedDate) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/visitor/datewise-visitor/', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var visitorsData = JSON.parse(xhr.responseText);
+                        updateHTML(visitorsData);
+                    } else {
+                        console.error('Error:', xhr.statusText);
+                    }
+                }
+            };
+            xhr.send(JSON.stringify({ check_in: selectedDate }));
+        }
+
+        function updateHTML(visitorsData) {
+            var tableBody = document.getElementById('visitor_table_body'); 
+            tableBody.innerHTML = ''; 
+
+            visitorsData.forEach(function(visitor) {
+                var row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${visitor.full_name}</td>
+                    <td>${visitor.mobile_number}</td>
+                    <td>${visitor.address}</td>
+                    
+                    <td>${visitor.purpose}</td>
+                    <td>${visitor.employee}</td>
+                    <td>${visitor.department}</td>
+                    <td>${visitor.check_in}</td>
+                    <td>${visitor.check_out || 'N/A'}</td>
+                    <td>${visitor.gate}</td>
+                    <td>${visitor.unit}</td>
+                    
+                `;
+                tableBody.appendChild(row); 
+            });
+        }
+
+        function printTable() {
+            var table = document.querySelector('.table');
+            var tableContent = table.outerHTML;
+            var originalContents = document.body.innerHTML;
+            var reportTitle = "<h2 style='border-radius: 10px; border: 2px solid #000; padding: 10px;'><center>Visitor Report</center></h2>";
+            var printContents = "<div class='print-table' style='border-radius: 10px; border: 2px solid #000; padding: 10px; margin-bottom: 0;'>" + reportTitle + tableContent + "</div>";
+
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        }
+    </script>
+</body>
+
+{% endblock %}

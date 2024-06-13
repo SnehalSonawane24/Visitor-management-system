@@ -1,0 +1,601 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    #searchInputActive  {
+        padding: 8px;
+        background-position: 10px 12px;
+        background-repeat: no-repeat;
+        width: 100%;
+        font-size: 16px;
+        height: 40px;
+        border: 1px solid rgb(105, 104, 104);
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border-color: #008d97;
+
+    }
+    #searchInputInactive {
+        padding: 8px;
+        background-position: 10px 12px;
+        background-repeat: no-repeat;
+        width: 100%;
+        font-size: 16px;
+        height: 40px;
+        border: 1px solid rgb(105, 104, 104);
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border-color: #008d97;
+
+    }
+    #add-visitor-btn{
+            float: right;
+            margin-bottom: 10px;
+            padding: 3px;
+            background-position: 10px 12px;
+            background-repeat: no-repeat;
+            width: 50%;
+            font-size: 16px;
+            height: 40px;
+            border: 1px solid rgb(105, 104, 104);
+            margin-bottom: 10px;
+            margin-left: 440%;
+            background-color: #008d97;  
+            color: #fff;
+            font-weight: bold;
+        }
+
+        #add-visitor-btn:hover {
+        background-color: #504f4e;
+
+    }
+    #toggleActiveVisitors{
+      
+        color: black;
+        outline: 1px solid #008d97;
+
+    }
+    #toggleInactiveVisitors{
+        
+        color: black;
+        
+        outline: 1px solid #008d97;
+    }
+
+    .toggle-buttons{
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    #action{
+        width: 300px;
+    }
+    .btn-xs{
+        height: 10px;
+        width: 10px;
+        font-size: smaller;
+    }
+    .custom-btn{
+        height: 30px;
+        width: 30px;
+        font-size: 10px; 
+        padding:  2px;
+        border-radius: 10px;
+    }
+    .card-body {
+        display: flex;
+        align-items: center;
+        
+    }
+    
+    .card-body .col-3 {
+        display: flex;
+        justify-content: center;
+    }
+    
+    .card-body .col-9 {
+        text-align: left; 
+    }
+    .inline{
+        display: inline;
+    }
+    p{
+        font-size: medium;
+    }
+    .table-responsive {
+        overflow-x: auto;
+    }
+    th {
+        font-size: 20px;
+        font-weight: bolder;
+    }
+    .container-fluid {
+        margin-bottom: 0; 
+        padding: 0 10px; 
+        margin-top: 5px;
+    
+    }
+    .active-button {
+        background-color: #008d97;
+        color: #fff
+    }
+
+    #toggleActiveVisitors.active-button,
+    #toggleInactiveVisitors.active-button {
+        background-color: #008d97;
+        color: white;
+        font-weight: bold;
+    }   
+    
+    .pagination {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    padding: 10px; 
+}
+
+.pagination .boxed {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px;
+    border: 1px solid #f0f0f0;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    color: black;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination .boxed:hover {
+    background-color: #0056b3;
+    color: #ffffff;
+}
+
+.pagination .current {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 4px;
+    color: black;
+
+}
+@media screen and (max-width: 768px) {
+    .table-responsive {
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch; 
+        
+    }
+
+    .table-bordered {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 1rem;
+        overflow: hidden;
+    }
+
+    .table-bordered th,
+    .table-bordered td {
+        padding: 0.75rem;
+        vertical-align: top;
+        border: 1px solid #dee2e6;
+    }
+
+    .table-bordered thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    #searchInputInactive{
+        padding: 5px;
+        width: 90%;
+        font-size: 12px;
+        height: 30px;
+        border: 1px solid rgb(105, 104, 104);
+        margin-bottom: 10px;
+        border-radius: 10px;
+        margin-left: 5%;
+        border-color: #008d97;
+    }
+    #searchInputActive {
+        padding: 5px;
+        width: 90%;
+        font-size: 12px;
+        height: 30px;
+        border: 1px solid rgb(105, 104, 104);
+        margin-bottom: 10px;
+        border-radius: 10px;
+        margin-left: 5%;
+        border-color: #008d97;
+
+    }
+
+    #add-visitor-btn{
+        padding: 5px;
+        width: 100%;
+        font-size: 12px;
+        height: 30px;
+        margin-bottom: 10px;
+        margin-left: 35%;
+        background-color: #008d97;  
+    }
+    #toggleActiveVisitors{
+        padding: 5px;
+        background-color: #008d97;  
+        color: #fff;
+        height: 30px;
+        font-size: 12px;
+        border: 1px solid rgb(105, 104, 104);
+        margin-bottom: 10px;
+        background-color: #008d97;  
+        
+    }
+    #toggleInactiveVisitors{
+        padding: 5px;
+        background-color: #008d97;  
+        color: #fff;
+        height: 30px;
+        font-size: 12px;
+        border: 1px solid rgb(105, 104, 104);
+        margin-bottom: 10px;
+        background-color: #008d97;  
+    }
+}   
+</style>
+
+
+<br>
+
+<div class="border border-dashed">
+    <div class="toggle-buttons">
+        <div class="col-lg-12 mb-3">
+            <button id="toggleActiveVisitors" class="btn">Active Visitors</button>
+            <button id="toggleInactiveVisitors" class="btn">Inactive Visitors</button>
+        </div>
+    </div>
+
+    <div class="col-lg-12" id="activeVisitorsTable">
+        <h3>Active Visitors</h3>
+
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="col-lg-6 mt-2 mt-sm-0">
+                <input type="text" id="searchInputActive" oninput="filterTable('active')" placeholder="Search by visitor name">
+            </div>
+            <div class="col-lg-6 mt-2 mt-sm-0">
+                <button class="btn add-visitor-btn" id="add-visitor-btn" onclick="window.location.href = '{% url 'get_visitor_profile' %}';">
+                    <i class="fa-solid fa-user-plus"></i> Add Visitor
+                </button>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped text-center">
+                <thead>
+                    <tr style="color: white; background-color: #005577;">
+                        <th>Name</th>
+                        <th>Contact</th>
+                        <th>Check-in Time</th>
+                        <th>Host Name</th>
+                        <th>Purpose</th>
+                        <th>Check-out Time</th>
+                        <th>Gatepass</th>
+                        <th>Action</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for visitor in active_visitors_page %}
+                    {% if visitor.is_active %}
+                    <tr>
+                        <td>{{ visitor.visitor.full_name }}</td>
+                        <td>{{ visitor.visitor.mobile_number }}</td>
+                        <td>{{ visitor.check_in }}</td>
+                        <td>{{ visitor.employee.full_name }}</td>
+                        <td>{{ visitor.purpose }}</td>
+                        <td>
+                            {% if visitor.check_out %}
+                                {{ visitor.check_out }}
+                            {% else %}
+                                <div id="checkoutDiv_{{ visitor.id }}">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <input type="datetime-local" class="form-control checkout-time" id="checkout_{{ visitor.id }}" name="check_out">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="col-md-2">
+                                                <button class="btn btn-darj checkout-btn" data-visit-id="{{ visitor.id }}"> <i class='far fa-arrow-alt-circle-right' ></i></button>
+                                            </div> 
+                                        </div>   
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button class="btn view-gatepass-btn" data-visit-id="{{ visitor.id }}">
+                                <i class='fas fa-file-pdf' style='font-size:30px;color: #008d97'></i>
+                            </button>
+                        </td>
+                       
+                        <td> 
+                            <a href="{% url 'update_visitor' visitor.id %}"><i class="fas fa-edit" style='font-size:25px;color: #008d97; margin: 5px;'></i></a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            {% if active_visitors_page.has_previous %}
+            <a class="boxed" href="?active_page=1">&laquo; First</a>
+            <a class="boxed" href="?active_page={{ active_visitors_page.previous_page_number }}">Previous</a>
+            {% endif %}
+            <span class="step-links">
+                <span class="current">
+                    Page {{ active_visitors_page.number }} of {{ active_visitors_page.paginator.num_pages }}.
+                </span>
+            </span>
+            {% if active_visitors_page.has_next %}
+            <a class="boxed" href="?active_page={{ active_visitors_page.next_page_number }}">Next</a>
+            <a class="boxed" href="?active_page={{ active_visitors_page.paginator.num_pages }}">Last &raquo;</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="col-lg-12" id="inactiveVisitorsTable" style="display: none;">
+        <h3>Inactive Visitors</h3>
+
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="col-lg-6 mt-2 mt-sm-0">
+                <input type="text" id="searchInputInactive" oninput="filterTable('inactive')" placeholder="Search by visitor name">
+            </div>
+            <div class="col-lg-6 mt-2 mt-sm-0">
+                <button class="btn add-visitor-btn" id="add-visitor-btn" onclick="window.location.href = '{% url 'visitor-register' %}';">
+                    <i class="fa-solid fa-user-plus"></i> Add Visitor
+                </button>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped text-center">
+                <thead>
+                    <tr style="color: white; background-color: #005577;">
+                        <th>Name</th>
+                        <th>Contact</th>
+                        <th>Check-in Time</th>
+                        <th>Host Name</th>
+                        <th>Purpose</th>
+                        <th>Check-out Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for visitor in inactive_visitors_page %}
+                    <tr>
+                        <td>{{ visitor.visitor.full_name }}</td>
+                        <td>{{ visitor.visitor.mobile_number }}</td>
+                        <td>{{ visitor.check_in }}</td>
+                        <td>{{ visitor.employee.full_name }}</td>
+                        <td>{{ visitor.purpose }}</td>
+                        <td>
+                            {% if visitor.check_out %}
+                                {{ visitor.check_out }}
+                            {% else %}
+                                <div id="checkoutDiv_{{ visitor.id }}">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <input type="datetime-local" class="form-control checkout-time" id="checkout_{{ visitor.id }}" name="check_out">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="col-md-2">
+                                                <button class="btn btn-darj checkout-btn" data-visit-id="{{ visitor.id }}"> <i class='far fa-arrow-alt-circle-right' ></i></button>
+                                            </div> 
+                                        </div>   
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            {% if inactive_visitors_page.has_previous %}
+            <a class="boxed" href="?inactive_page=1">&laquo; First</a>
+            <a class="boxed" href="?inactive_page={{ inactive_visitors_page.previous_page_number }}">Previous</a>
+            {% endif %}
+            <span class="step-links">
+                <span class="current">
+                    Page {{ inactive_visitors_page.number }} of {{ inactive_visitors_page.paginator.num_pages }}.
+                </span>
+            </span>
+            {% if inactive_visitors_page.has_next %}
+            <a class="boxed" href="?inactive_page={{ inactive_visitors_page.next_page_number }}">Next</a>
+            <a class="boxed" href="?inactive_page={{ inactive_visitors_page.paginator.num_pages }}">Last &raquo;</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+$(document).ready(function() {
+
+    // Handle click event on edit button
+    $(document).on('click', '.edit-btn', function() {
+        const row = $(this).closest('tr');
+
+        // Toggle editing mode for each editable cell
+        row.find('.editable').each(function() {
+            const value = $(this).text();
+            const field = $(this).data('field');
+            $(this).html(`<input type="text" class="form-control" value="${value}" data-field="${field}">`);
+        });
+        // Replace edit button with save button
+        const visitId = $(this).data('visit-id');
+        const saveBtn = $('<button class="btn btn-success save-btn" data-visit-id="' + visitId + '">Save</button>');
+        console.log("at line 499", saveBtn);
+        $(this).replaceWith(saveBtn);
+    });
+
+    $(document).on('click', '.save-btn', function() {
+        const row = $(this).closest('tr');
+        const visitId = $(this).data('visit-id');
+        const data = {};
+        // Collect edited data from input fields
+        row.find('input').each(function() {
+            const field = $(this).data('field');
+            const value = $(this).val();
+            data[field] = value;
+        });
+        console.log('at line 522 Data:', data);
+        // Send AJAX request to update the database
+        $.ajax({
+            url: `/update-visit/${visitId}/`,
+            type: 'POST',
+            data: data,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                console.log('Success:', response);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+});
+
+
+
+$(document).ready(function() {
+        $('#toggleActiveVisitors').addClass('active-button').on('click', function() {
+            $('#activeVisitorsTable').show();
+            $('#inactiveVisitorsTable').hide();
+            $(this).addClass('active-button');
+            $('#toggleInactiveVisitors').removeClass('active-button');
+        });
+        
+        // Function to handle click event on inactive visitors button
+        $('#toggleInactiveVisitors').on('click', function() {
+            $('#activeVisitorsTable').hide();
+            $('#inactiveVisitorsTable').show();
+            $(this).addClass('active-button');
+            $('#toggleActiveVisitors').removeClass('active-button');
+        });
+
+    });
+
+
+
+// Search Button Script
+function filterTable(tableType) {
+    const searchFilter = tableType === 'active' ? document.getElementById("searchInputActive").value.toLowerCase() : document.getElementById("searchInputInactive").value.toLowerCase();
+    const tableRows = tableType === 'active' ? document.querySelectorAll("#activeVisitorsTable tbody tr") : document.querySelectorAll("#inactiveVisitorsTable tbody tr");
+    tableRows.forEach(row => {
+        const visitorName = row.cells[0].textContent.toLowerCase();
+        if (visitorName.includes(searchFilter)) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
+}
+
+
+    $('.checkout-btn').on('click', function() {
+        const visitId = $(this).data('visit-id');
+        const checkoutTimeInput = $(`#checkout_${visitId}`);
+        const selectedCheckoutTime = checkoutTimeInput.val();
+    
+        let checkoutTime;
+        if (selectedCheckoutTime) {
+            checkoutTime = selectedCheckoutTime;
+        } else {
+            const now = new Date();
+            checkoutTime = now.toISOString();
+        }
+    
+        fetch('/checkout-visitor/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}' 
+            },
+            body: JSON.stringify({ visit_id: visitId, checkout_time: checkoutTime })
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                console.error('Error checking out visitor');
+            }
+        })
+        .catch(error => {
+            console.error('Error checking out visitor:', error);
+        });
+    });
+
+    $(document).ready(function() {
+        // Function to handle click event on active visitors button
+        $('#toggleActiveVisitors').on('click', function() {
+            $('#activeVisitorsTable').show();
+            $('#inactiveVisitorsTable').hide();
+            $(this).addClass('active-button');
+            $('#toggleInactiveVisitors').removeClass('active-button');
+        });
+        
+        // Function to handle click event on inactive visitors button
+        $('#toggleInactiveVisitors').on('click', function() {
+            $('#activeVisitorsTable').hide();
+            $('#inactiveVisitorsTable').show();
+            $(this).addClass('active-button');
+            $('#toggleActiveVisitors').removeClass('active-button');
+        });
+
+    });
+
+    $('.checkout-btn').on('click', function() 
+    {
+        const visitId = $(this).data('visit-id');
+        fetch('/checkout-visitor/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}' 
+            },
+            body: JSON.stringify({ visit_id: visitId })
+        }) 
+        .then(response => {
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                console.error('Error checking out visitor');
+            }
+        })
+        .catch(error => {
+            console.error('Error checking out visitor:', error);
+        });
+    }); 
+    $(document).ready(function() {
+        $('.view-gatepass-btn').on('click', function() {
+            const visitId = $(this).data('visit-id');
+            window.location.href = '/view_gatepass/' + visitId;
+        });
+    });
+
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var colcontent = this.nextElementSibling;
+        if (colcontent.style.display === "block") {
+        colcontent.style.display = "none";
+        } else {
+        colcontent.style.display = "block";
+        }
+    });   
+}
+</script>
+    
+{% endblock %}
