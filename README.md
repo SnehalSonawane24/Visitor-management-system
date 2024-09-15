@@ -1,5 +1,9 @@
 # README #
 
+VMS-Snapshots
+![Image description](vms-snapshots/login.png)
+
+
 ### To generate dummy data ###
 * python manage.py generate_data
 
