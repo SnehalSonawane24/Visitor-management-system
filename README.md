@@ -1,5 +1,25 @@
 # README #
 
+VMS-Snapshots
+![Image description](vms-snapshots/login.png)
+![Image description](vms-snapshots/active-visitor.png)
+![Image description](vms-snapshots/inactive-visitor.png)
+![Image description](vms-snapshots/visitor-reg1.png)
+![Image description](vms-snapshots/visitor-reg2.png)
+![Image description](vms-snapshots/visitor-reg-3.png)
+![Image description](vms-snapshots/gatepass.png)
+![Image description](vms-snapshots/orgnisation.png)
+![Image description](vms-snapshots/unit.png)
+![Image description](vms-snapshots/gate.png)
+![Image description](vms-snapshots/department.png)
+![Image description](vms-snapshots/employee.png)
+![Image description](vms-snapshots/report.png)
+![Image description](vms-snapshots/analytics1.png)
+![Image description](vms-snapshots/analytics2.png)
+![Image description](vms-snapshots/sel-reg-1.png)
+![Image description](vms-snapshots/sel-reg-2.png)
+![Image description](vms-snapshots/self-reg-gatepass.png)
+
 ### To generate dummy data ###
 * python manage.py generate_data
 
