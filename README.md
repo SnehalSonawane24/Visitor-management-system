@@ -16,8 +16,10 @@ VMS-Snapshots
 ![Image description](vms-snapshots/report.png)
 ![Image description](vms-snapshots/analytics1.png)
 ![Image description](vms-snapshots/analytics2.png)
-![Image description](vms-snapshots/sel-reg-1.png)
-![Image description](vms-snapshots/sel-reg-2.png)
+![Image description](vms-snapshots/QR.png)
+![Image description](vms-snapshots/self-reg-1.png)
+![Image description](vms-snapshots/self-reg-2.png)
+![Image description](vms-snapshots/self-reg-3.png)
 ![Image description](vms-snapshots/self-reg-gatepass.png)
 
 ### To generate dummy data ###
