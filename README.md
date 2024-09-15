@@ -22,6 +22,52 @@ VMS-Snapshots
 ![Image description](vms-snapshots/self-reg-3.png)
 ![Image description](vms-snapshots/self-reg-gatepass.png)
 
+
+
+### Objective
+
+The primary goal of the VMS is to provide real-time tracking of visitors, including their check-in and check-out times, to enhance security and efficiency within organizations.
+
+### Workflow
+
+**Use Cases:**
+
+1. **Self-Registration:** Visitors can scan a QR code provided at designated gates to access a registration form. Upon completion, they receive an email notification with their registration details.
+2. **Receptionist Registration:** Receptionists can manually register visitors through a centralized dashboard, capturing essential information.
+
+**Data Points:**
+
+- Name
+- Address
+- Mobile number
+- Photo
+- Number of accompanying persons
+- Vehicle information
+- Meeting purpose
+- Entry gate
+- Check-in time
+
+**Notifications:**
+
+Upon successful registration, the relevant individual receives an email notification containing the visitor's name, check-in time, purpose of visit, and accompanying persons.
+
+### Key Features
+
+* **Customization:** The VMS is highly configurable to meet the specific needs of different organizations.
+* **Organizational Structure:** The system supports hierarchical structures, allowing for separation by organization, unit, and gate.
+* **Real-Time Tracking:** Provides real-time monitoring of visitor activity, including check-in and check-out times.
+* **Comprehensive Reporting:** Generates detailed reports in both tabular and graphical formats, allowing for easy analysis and tracking.
+* **Date Range Filtering:** Enables users to filter reports based on specific date ranges.
+* **Excel Export:** Provides the option to export data to Excel for further analysis or storage.
+
+### Additional Considerations
+
+* **Security:** Implement robust security measures to protect sensitive visitor information.
+* **Integration:** Explore integration possibilities with existing systems, such as access control or security cameras.
+* **User Experience:** Design an intuitive and user-friendly interface for both visitors and receptionists.
+
+By implementing these features and considerations, the VMS can effectively manage visitor traffic, enhance security, and improve overall organizational efficiency.
+
 ### To generate dummy data ###
 * python manage.py generate_data
 
